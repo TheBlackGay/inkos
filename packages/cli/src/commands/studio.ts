@@ -49,7 +49,11 @@ export const studioCommand = new Command("studio")
 
     log(`Starting InkOS Studio on http://localhost:${port}`);
 
-    const child = spawn("npx", ["tsx", studioEntry], {
+    const launch = studioEntry.endsWith(".ts")
+      ? { command: "npx", args: ["tsx", studioEntry] }
+      : { command: "node", args: [studioEntry] };
+
+    const child = spawn(launch.command, launch.args, {
       cwd: root,
       stdio: "inherit",
       env: { ...process.env, INKOS_STUDIO_PORT: port },
