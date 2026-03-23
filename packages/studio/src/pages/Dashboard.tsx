@@ -179,9 +179,9 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Recent Activity */}
+      {/* 最近活动 */}
       <div className="card">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">最近活动</h2>
         <div className="space-y-4">
           <div className="flex items-start">
             <div className="flex-shrink-0">
@@ -190,8 +190,8 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-900">Chapter 31 of "吞天魔帝" approved</p>
-              <p className="text-sm text-gray-500">2 hours ago</p>
+              <p className="text-sm font-medium text-gray-900">《吞天魔帝》第31章已批准</p>
+              <p className="text-sm text-gray-500">2小时前</p>
             </div>
           </div>
           <div className="flex items-start">
@@ -201,8 +201,8 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-900">Chapter 32 of "吞天魔帝" drafted</p>
-              <p className="text-sm text-gray-500">4 hours ago</p>
+              <p className="text-sm font-medium text-gray-900">《吞天魔帝》第32章已草稿</p>
+              <p className="text-sm text-gray-500">4小时前</p>
             </div>
           </div>
           <div className="flex items-start">
@@ -212,8 +212,8 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-900">Chapter 28 of "都市修仙" failed audit</p>
-              <p className="text-sm text-gray-500">6 hours ago</p>
+              <p className="text-sm font-medium text-gray-900">《都市修仙》第28章审计失败</p>
+              <p className="text-sm text-gray-500">6小时前</p>
             </div>
           </div>
           <div className="flex items-start">
@@ -223,8 +223,8 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-900">New book "星际穿越" created</p>
-              <p className="text-sm text-gray-500">1 day ago</p>
+              <p className="text-sm font-medium text-gray-900">新建书籍《星际穿越》</p>
+              <p className="text-sm text-gray-500">1天前</p>
             </div>
           </div>
         </div>

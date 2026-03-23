@@ -6,11 +6,11 @@ const Layout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navigation = [
-    { name: 'Dashboard', path: '/', icon: Home },
-    { name: 'Projects', path: '/projects', icon: Activity },
-    { name: 'Books', path: '/books', icon: Book },
-    { name: 'Daemon', path: '/daemon', icon: Server },
-    { name: 'Settings', path: '/settings', icon: Settings },
+    { name: '仪表盘', path: '/', icon: Home },
+    { name: '项目', path: '/projects', icon: Activity },
+    { name: '书籍', path: '/books', icon: Book },
+    { name: '守护进程', path: '/daemon', icon: Server },
+    { name: '设置', path: '/settings', icon: Settings },
   ];
 
   return (
@@ -103,7 +103,7 @@ const Layout: React.FC = () => {
                   className="nav-link"
                 >
                   <BookOpen className="mr-3 h-5 w-5" />
-                  <span>Documentation</span>
+                  <span>文档</span>
                 </a>
               </div>
             </div>

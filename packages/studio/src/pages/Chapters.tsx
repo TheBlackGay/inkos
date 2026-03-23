@@ -213,17 +213,17 @@ const Chapters: React.FC = () => {
       {/* Page Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Chapters</h1>
-          <p className="text-sm text-gray-500">Book: {bookTitle}</p>
+          <h1 className="text-2xl font-bold text-gray-900">章节管理</h1>
+          <p className="text-sm text-gray-500">书籍: {bookTitle}</p>
         </div>
         <div className="flex space-x-2">
           <Link to={`/books/${id}/state`} className="btn btn-secondary">
             <Book className="mr-2 h-4 w-4" />
-            View State
+            查看状态
           </Link>
           <button className="btn btn-primary">
             <FileText className="mr-2 h-4 w-4" />
-            Write Next Chapter
+            写下一章
           </button>
         </div>
       </div>
@@ -234,7 +234,7 @@ const Chapters: React.FC = () => {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
           <input
             type="text"
-            placeholder="Search chapters..."
+            placeholder="搜索章节..."
             className="input pl-10"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -246,16 +246,16 @@ const Chapters: React.FC = () => {
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
           >
-            <option value="all">All Statuses</option>
-            <option value="drafted">Drafted</option>
-            <option value="auditing">Auditing</option>
-            <option value="audit-passed">Audit Passed</option>
-            <option value="audit-failed">Audit Failed</option>
-            <option value="revising">Revising</option>
-            <option value="ready-for-review">Ready for Review</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
-            <option value="published">Published</option>
+            <option value="all">所有状态</option>
+            <option value="drafted">已草稿</option>
+            <option value="auditing">审计中</option>
+            <option value="audit-passed">审计通过</option>
+            <option value="audit-failed">审计失败</option>
+            <option value="revising">修订中</option>
+            <option value="ready-for-review">待审核</option>
+            <option value="approved">已批准</option>
+            <option value="rejected">已拒绝</option>
+            <option value="published">已发布</option>
           </select>
           <div className="flex items-center space-x-2">
             <select
@@ -263,10 +263,10 @@ const Chapters: React.FC = () => {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
-              <option value="number">Chapter Number</option>
-              <option value="title">Title</option>
-              <option value="wordCount">Word Count</option>
-              <option value="updatedAt">Updated At</option>
+              <option value="number">章节号</option>
+              <option value="title">标题</option>
+              <option value="wordCount">字数</option>
+              <option value="updatedAt">更新时间</option>
             </select>
             <button
               className="btn btn-secondary p-2"
@@ -284,22 +284,22 @@ const Chapters: React.FC = () => {
           <thead className="bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Chapter
+                章节
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Title
+                标题
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
+                状态
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Word Count
+                字数
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Updated
+                更新时间
               </th>
               <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
+                操作
               </th>
             </tr>
           </thead>
@@ -363,7 +363,7 @@ const Chapters: React.FC = () => {
         </table>
         {filteredChapters.length === 0 && (
           <div className="px-6 py-12 text-center">
-            <p className="text-gray-500">No chapters found</p>
+            <p className="text-gray-500">未找到章节</p>
           </div>
         )}
       </div>
@@ -373,7 +373,7 @@ const Chapters: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Chapter {selectedChapter.number}: {selectedChapter.title}</h2>
+              <h2 className="text-lg font-semibold text-gray-900">第{selectedChapter.number}章: {selectedChapter.title}</h2>
               <button
                 className="text-gray-400 hover:text-gray-500"
                 onClick={() => setIsViewModalOpen(false)}
@@ -390,11 +390,11 @@ const Chapters: React.FC = () => {
                 </span>
                 <span className="text-sm text-gray-500">
                   <Clock className="inline h-4 w-4 mr-1" />
-                  Updated: {selectedChapter.updatedAt}
+                  更新时间: {selectedChapter.updatedAt}
                 </span>
                 <span className="text-sm text-gray-500">
                   <FileText className="inline h-4 w-4 mr-1" />
-                  {selectedChapter.wordCount.toLocaleString()} words
+                  {selectedChapter.wordCount.toLocaleString()}字
                 </span>
               </div>
               <div className="prose max-w-none">
@@ -402,7 +402,7 @@ const Chapters: React.FC = () => {
               </div>
               {selectedChapter.auditIssues.length > 0 && (
                 <div className="mt-4 p-4 bg-danger/10 rounded-md">
-                  <h3 className="text-sm font-medium text-danger mb-2">Audit Issues</h3>
+                  <h3 className="text-sm font-medium text-danger mb-2">审计问题</h3>
                   <ul className="list-disc list-inside text-sm text-danger space-y-1">
                     {selectedChapter.auditIssues.map((issue, index) => (
                       <li key={index}>{issue}</li>
@@ -420,7 +420,7 @@ const Chapters: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Edit Chapter {selectedChapter.number}: {selectedChapter.title}</h2>
+              <h2 className="text-lg font-semibold text-gray-900">编辑第{selectedChapter.number}章: {selectedChapter.title}</h2>
               <button
                 className="text-gray-400 hover:text-gray-500"
                 onClick={() => setIsEditModalOpen(false)}
@@ -432,7 +432,7 @@ const Chapters: React.FC = () => {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">内容</label>
                 <textarea
                   className="input min-h-[300px]"
                   value={editContent}
@@ -444,13 +444,13 @@ const Chapters: React.FC = () => {
                   className="btn btn-secondary"
                   onClick={() => setIsEditModalOpen(false)}
                 >
-                  Cancel
+                  取消
                 </button>
                 <button
                   className="btn btn-primary"
                   onClick={handleSaveEdit}
                 >
-                  Save
+                  保存
                 </button>
               </div>
             </div>
@@ -463,7 +463,7 @@ const Chapters: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Audit Chapter {selectedChapter.number}: {selectedChapter.title}</h2>
+              <h2 className="text-lg font-semibold text-gray-900">审计第{selectedChapter.number}章: {selectedChapter.title}</h2>
               <button
                 className="text-gray-400 hover:text-gray-500"
                 onClick={() => setIsAuditModalOpen(false)}
@@ -475,23 +475,23 @@ const Chapters: React.FC = () => {
             </div>
             <div className="space-y-4">
               <div className="p-4 bg-gray-50 rounded-md">
-                <h3 className="text-sm font-medium text-gray-900 mb-2">Audit Results</h3>
+                <h3 className="text-sm font-medium text-gray-900 mb-2">审计结果</h3>
                 <div className="space-y-2">
                   <div className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    <span className="text-sm text-gray-900">Character consistency: Pass</span>
+                    <span className="text-sm text-gray-900">角色一致性: 通过</span>
                   </div>
                   <div className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    <span className="text-sm text-gray-900">Plot continuity: Pass</span>
+                    <span className="text-sm text-gray-900">情节连续性: 通过</span>
                   </div>
                   <div className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-success mr-2" />
-                    <span className="text-sm text-gray-900">World building: Pass</span>
+                    <span className="text-sm text-gray-900">世界观构建: 通过</span>
                   </div>
                   <div className="flex items-center">
                     <AlertTriangle className="h-4 w-4 text-warning mr-2" />
-                    <span className="text-sm text-gray-900">Pace: Warning - Some sections may be too slow</span>
+                    <span className="text-sm text-gray-900">节奏: 警告 - 部分章节可能过于缓慢</span>
                   </div>
                 </div>
               </div>
@@ -500,11 +500,11 @@ const Chapters: React.FC = () => {
                   className="btn btn-secondary"
                   onClick={() => setIsAuditModalOpen(false)}
                 >
-                  Close
+                  关闭
                 </button>
                 <button className="btn btn-primary">
                   <RefreshCw className="mr-2 h-4 w-4" />
-                  Revise
+                  修订
                 </button>
               </div>
             </div>
@@ -517,7 +517,7 @@ const Chapters: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Revise Chapter {selectedChapter.number}: {selectedChapter.title}</h2>
+              <h2 className="text-lg font-semibold text-gray-900">修订第{selectedChapter.number}章: {selectedChapter.title}</h2>
               <button
                 className="text-gray-400 hover:text-gray-500"
                 onClick={() => setIsReviseModalOpen(false)}
@@ -529,14 +529,14 @@ const Chapters: React.FC = () => {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Revision Notes</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">修订说明</label>
                 <textarea
                   className="input min-h-[100px]"
-                  placeholder="Enter revision notes..."
+                  placeholder="输入修订说明..."
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Revised Content</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">修订内容</label>
                 <textarea
                   className="input min-h-[300px]"
                   value={selectedChapter.content}
@@ -548,11 +548,11 @@ const Chapters: React.FC = () => {
                   className="btn btn-secondary"
                   onClick={() => setIsReviseModalOpen(false)}
                 >
-                  Cancel
+                  取消
                 </button>
                 <button className="btn btn-primary">
                   <CheckCircle className="mr-2 h-4 w-4" />
-                  Save Revision
+                  保存修订
                 </button>
               </div>
             </div>

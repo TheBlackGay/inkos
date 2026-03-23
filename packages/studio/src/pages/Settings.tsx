@@ -90,7 +90,7 @@ const Settings: React.FC = () => {
     <div className="space-y-6">
       {/* Page Header */}
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
+        <h1 className="text-2xl font-bold text-gray-900">设置</h1>
       </div>
 
       {/* LLM Configuration */}
@@ -99,7 +99,7 @@ const Settings: React.FC = () => {
           className="flex justify-between items-center cursor-pointer"
           onClick={() => handleToggleSection('llm')}
         >
-          <h2 className="text-lg font-semibold text-gray-900">LLM Configuration</h2>
+          <h2 className="text-lg font-semibold text-gray-900">LLM 配置</h2>
           <button className="text-gray-400 hover:text-gray-500">
             {expandedSection === 'llm' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </button>
@@ -108,7 +108,7 @@ const Settings: React.FC = () => {
           <div className="mt-4 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Provider</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">提供商</label>
                 <select
                   className="select"
                   value={llmConfig.provider}
@@ -116,11 +116,11 @@ const Settings: React.FC = () => {
                 >
                   <option value="openai">OpenAI</option>
                   <option value="anthropic">Anthropic</option>
-                  <option value="custom">Custom</option>
+                  <option value="custom">自定义</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Model</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">模型</label>
                 <input
                   type="text"
                   className="input"
@@ -130,7 +130,7 @@ const Settings: React.FC = () => {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Base URL</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">基础 URL</label>
               <input
                 type="text"
                 className="input"
@@ -139,7 +139,7 @@ const Settings: React.FC = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">API Key</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">API 密钥</label>
               <input
                 type="password"
                 className="input"
@@ -149,7 +149,7 @@ const Settings: React.FC = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Temperature</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">温度</label>
                 <input
                   type="number"
                   step="0.1"
@@ -161,7 +161,7 @@ const Settings: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Max Tokens</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">最大令牌数</label>
                 <input
                   type="number"
                   className="input"
@@ -176,7 +176,7 @@ const Settings: React.FC = () => {
                 onClick={handleSaveLLMConfig}
               >
                 <Save className="mr-2 h-4 w-4" />
-                Save Configuration
+                保存配置
               </button>
             </div>
           </div>
@@ -189,7 +189,7 @@ const Settings: React.FC = () => {
           className="flex justify-between items-center cursor-pointer"
           onClick={() => handleToggleSection('notify')}
         >
-          <h2 className="text-lg font-semibold text-gray-900">Notification Configuration</h2>
+          <h2 className="text-lg font-semibold text-gray-900">通知配置</h2>
           <button className="text-gray-400 hover:text-gray-500">
             {expandedSection === 'notify' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </button>
@@ -268,24 +268,24 @@ const Settings: React.FC = () => {
             </div>
             {isAddingChannel ? (
               <div className="p-4 border border-dashed border-gray-300 rounded-md">
-                <h3 className="text-md font-medium text-gray-900 mb-4">Add New Channel</h3>
+                <h3 className="text-md font-medium text-gray-900 mb-4">添加新渠道</h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">类型</label>
                       <select
                         className="select"
                         value={newChannel.type}
                         onChange={(e) => setNewChannel({ ...newChannel, type: e.target.value })}
                       >
                         <option value="telegram">Telegram</option>
-                        <option value="wechat-work">WeChat Work</option>
-                        <option value="feishu">Feishu</option>
+                        <option value="wechat-work">企业微信</option>
+                        <option value="feishu">飞书</option>
                         <option value="webhook">Webhook</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">名称</label>
                       <input
                         type="text"
                         className="input"
@@ -297,7 +297,7 @@ const Settings: React.FC = () => {
                   {newChannel.type === 'telegram' && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Bot Token</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">机器人令牌</label>
                         <input
                           type="text"
                           className="input"
@@ -305,7 +305,7 @@ const Settings: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Chat ID</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">聊天 ID</label>
                         <input
                           type="text"
                           className="input"
@@ -325,7 +325,7 @@ const Settings: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Secret</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">密钥</label>
                         <input
                           type="password"
                           className="input"
@@ -333,7 +333,7 @@ const Settings: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Events (comma separated)</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">事件 (逗号分隔)</label>
                         <input
                           type="text"
                           className="input"
@@ -348,13 +348,13 @@ const Settings: React.FC = () => {
                       className="btn btn-secondary"
                       onClick={() => setIsAddingChannel(false)}
                     >
-                      Cancel
+                      取消
                     </button>
                     <button
                       className="btn btn-primary"
                       onClick={handleAddChannel}
                     >
-                      Add Channel
+                      添加渠道
                     </button>
                   </div>
                 </div>
@@ -365,7 +365,7 @@ const Settings: React.FC = () => {
                 onClick={() => setIsAddingChannel(true)}
               >
                 <Plus className="mr-2 h-4 w-4" />
-                Add New Channel
+                添加新渠道
               </button>
             )}
             <div className="flex justify-end">
@@ -374,7 +374,7 @@ const Settings: React.FC = () => {
                 onClick={handleSaveNotifyConfig}
               >
                 <Save className="mr-2 h-4 w-4" />
-                Save Configuration
+                保存配置
               </button>
             </div>
           </div>
@@ -387,7 +387,7 @@ const Settings: React.FC = () => {
           className="flex justify-between items-center cursor-pointer"
           onClick={() => handleToggleSection('general')}
         >
-          <h2 className="text-lg font-semibold text-gray-900">General Configuration</h2>
+          <h2 className="text-lg font-semibold text-gray-900">通用配置</h2>
           <button className="text-gray-400 hover:text-gray-500">
             {expandedSection === 'general' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </button>
@@ -395,7 +395,7 @@ const Settings: React.FC = () => {
         {expandedSection === 'general' && (
           <div className="mt-4 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Language</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">语言</label>
               <select
                 className="select"
               >
@@ -404,7 +404,7 @@ const Settings: React.FC = () => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Project Name</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">项目名称</label>
               <input
                 type="text"
                 className="input"
@@ -414,7 +414,7 @@ const Settings: React.FC = () => {
             <div className="flex justify-end">
               <button className="btn btn-primary">
                 <Save className="mr-2 h-4 w-4" />
-                Save Configuration
+                保存配置
               </button>
             </div>
           </div>

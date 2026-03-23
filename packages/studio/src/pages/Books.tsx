@@ -173,13 +173,13 @@ const Books: React.FC = () => {
     <div className="space-y-6">
       {/* Page Header */}
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">Books</h1>
+        <h1 className="text-2xl font-bold text-gray-900">书籍管理</h1>
         <button 
           className="btn btn-primary" 
           onClick={() => setIsCreateModalOpen(true)}
         >
           <Plus className="mr-2 h-4 w-4" />
-          Create New Book
+          新建书籍
         </button>
       </div>
 
@@ -189,7 +189,7 @@ const Books: React.FC = () => {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
           <input
             type="text"
-            placeholder="Search books..."
+            placeholder="搜索书籍..."
             className="input pl-10"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -201,12 +201,12 @@ const Books: React.FC = () => {
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
           >
-            <option value="all">All Statuses</option>
-            <option value="incubating">Incubating</option>
-            <option value="active">Active</option>
-            <option value="paused">Paused</option>
-            <option value="completed">Completed</option>
-            <option value="dropped">Dropped</option>
+            <option value="all">所有状态</option>
+            <option value="incubating">孵化中</option>
+            <option value="active">进行中</option>
+            <option value="paused">暂停</option>
+            <option value="completed">已完成</option>
+            <option value="dropped">已放弃</option>
           </select>
           <div className="flex items-center space-x-2">
             <select
@@ -214,10 +214,10 @@ const Books: React.FC = () => {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
-              <option value="createdAt">Created Date</option>
-              <option value="title">Title</option>
-              <option value="chapters">Chapters</option>
-              <option value="wordCount">Word Count</option>
+              <option value="createdAt">创建日期</option>
+              <option value="title">标题</option>
+              <option value="chapters">章节数</option>
+              <option value="wordCount">字数</option>
             </select>
             <button
               className="btn btn-secondary p-2"
@@ -235,25 +235,25 @@ const Books: React.FC = () => {
           <thead className="bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Title
+                标题
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Genre
+                题材
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
+                状态
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Chapters
+                章节数
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Word Count
+                字数
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Created
+                创建日期
               </th>
               <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
+                操作
               </th>
             </tr>
           </thead>
@@ -307,7 +307,7 @@ const Books: React.FC = () => {
         </table>
         {filteredBooks.length === 0 && (
           <div className="px-6 py-12 text-center">
-            <p className="text-gray-500">No books found</p>
+            <p className="text-gray-500">未找到书籍</p>
           </div>
         )}
       </div>
@@ -316,10 +316,10 @@ const Books: React.FC = () => {
       {isCreateModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Create New Book</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">新建书籍</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">标题</label>
                 <input
                   type="text"
                   className="input"
@@ -328,7 +328,7 @@ const Books: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Genre</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">题材</label>
                 <input
                   type="text"
                   className="input"
@@ -337,17 +337,17 @@ const Books: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">状态</label>
                 <select
                   className="select"
                   value={newBook.status}
                   onChange={(e) => setNewBook({ ...newBook, status: e.target.value })}
                 >
-                  <option value="incubating">Incubating</option>
-                  <option value="active">Active</option>
-                  <option value="paused">Paused</option>
-                  <option value="completed">Completed</option>
-                  <option value="dropped">Dropped</option>
+                  <option value="incubating">孵化中</option>
+                  <option value="active">进行中</option>
+                  <option value="paused">暂停</option>
+                  <option value="completed">已完成</option>
+                  <option value="dropped">已放弃</option>
                 </select>
               </div>
             </div>
@@ -356,13 +356,13 @@ const Books: React.FC = () => {
                 className="btn btn-secondary"
                 onClick={() => setIsCreateModalOpen(false)}
               >
-                Cancel
+                取消
               </button>
               <button
                 className="btn btn-primary"
                 onClick={handleCreateBook}
               >
-                Create
+                创建
               </button>
             </div>
           </div>
@@ -373,10 +373,10 @@ const Books: React.FC = () => {
       {isEditModalOpen && currentBook && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Edit Book</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">编辑书籍</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">标题</label>
                 <input
                   type="text"
                   className="input"
@@ -385,7 +385,7 @@ const Books: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Genre</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">题材</label>
                 <input
                   type="text"
                   className="input"
@@ -394,17 +394,17 @@ const Books: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">状态</label>
                 <select
                   className="select"
                   value={newBook.status}
                   onChange={(e) => setNewBook({ ...newBook, status: e.target.value })}
                 >
-                  <option value="incubating">Incubating</option>
-                  <option value="active">Active</option>
-                  <option value="paused">Paused</option>
-                  <option value="completed">Completed</option>
-                  <option value="dropped">Dropped</option>
+                  <option value="incubating">孵化中</option>
+                  <option value="active">进行中</option>
+                  <option value="paused">暂停</option>
+                  <option value="completed">已完成</option>
+                  <option value="dropped">已放弃</option>
                 </select>
               </div>
             </div>
@@ -413,13 +413,13 @@ const Books: React.FC = () => {
                 className="btn btn-secondary"
                 onClick={() => setIsEditModalOpen(false)}
               >
-                Cancel
+                取消
               </button>
               <button
                 className="btn btn-primary"
                 onClick={handleEditBook}
               >
-                Save
+                保存
               </button>
             </div>
           </div>

@@ -26,50 +26,50 @@ const State: React.FC = () => {
       {
         id: '1',
         name: 'current_state.md',
-        title: 'Current State',
-        content: '# Current State\n\n## Chapter 31\n\n### Location\nThe Azure Mountains\n\n### Protagonist\n- Status: Advancing to the 9th layer of the Nascent Soul realm\n- Current Goal: Defeat the Azure Dragon\n- Constraints: Low on spiritual energy\n\n### Enemies\n- Azure Dragon: Powerful beast, territorial\n- Elder Zhang: Jealous of protagonist\n\n### Known Truths\n- The Azure Dragon guards a spiritual artifact\n- Elder Zhang is working with the demonic sect\n\n### Current Conflict\nProtagonist vs Azure Dragon\n\n### Anchor\nProtagonist remembers his master\'s teachings',
+        title: '当前状态',
+        content: '# 当前状态\n\n## 第31章\n\n### 地点\n Azure山脉\n\n### 主角\n- 状态: 正在进阶到元婴期第9层\n- 当前目标: 击败Azure龙\n- 限制: 灵力不足\n\n### 敌人\n- Azure龙: 强大的野兽，有领地意识\n- 张长老: 嫉妒主角\n\n### 已知真相\n- Azure龙守护着一件灵物\n- 张长老与魔门勾结\n\n### 当前冲突\n主角 vs Azure龙\n\n### 锚点\n主角想起师傅的教导',
         updatedAt: '2026-03-20'
       },
       {
         id: '2',
         name: 'particle_ledger.md',
-        title: 'Particle Ledger',
-        content: '# Particle Ledger\n\n## Hard Cap\n1000\n\n## Current Total\n850\n\n## Entries\n- Chapter 30: +50 from spiritual herbs\n- Chapter 31: -100 to activate defensive array',
+        title: '粒子 ledger',
+        content: '# 粒子 ledger\n\n## 硬上限\n1000\n\n## 当前总数\n850\n\n## 条目\n- 第30章: +50 来自灵草\n- 第31章: -100 激活防御阵',
         updatedAt: '2026-03-20'
       },
       {
         id: '3',
         name: 'pending_hooks.md',
-        title: 'Pending Hooks',
-        content: '# Pending Hooks\n\n## Open\n- Hook 1: The mysterious amulet\n- Hook 2: The demonic sect\'s plan\n\n## Progressing\n- Hook 3: Elder Zhang\'s betrayal\n\n## Resolved\n- Hook 4: The missing spiritual stone',
+        title: '待处理钩子',
+        content: '# 待处理钩子\n\n## 开放\n- 钩子1: 神秘的护身符\n- 钩子2: 魔门的计划\n\n## 进行中\n- 钩子3: 张长老的背叛\n\n## 已解决\n- 钩子4: 丢失的灵石',
         updatedAt: '2026-03-20'
       },
       {
         id: '4',
         name: 'chapter_summaries.md',
-        title: 'Chapter Summaries',
-        content: '# Chapter Summaries\n\n## Chapter 30\n- Protagonist finds spiritual herbs\n- Elder Zhang shows signs of betrayal\n\n## Chapter 31\n- Protagonist battles Azure Dragon\n- Discovers demonic sect involvement',
+        title: '章节摘要',
+        content: '# 章节摘要\n\n## 第30章\n- 主角找到灵草\n- 张长老表现出背叛迹象\n\n## 第31章\n- 主角与Azure龙战斗\n- 发现魔门参与',
         updatedAt: '2026-03-20'
       },
       {
         id: '5',
         name: 'subplot_board.md',
-        title: 'Subplot Board',
-        content: '# Subplot Board\n\n## A Line: Main Story\n- Status: Active\n\n## B Line: Elder Zhang\'s Betrayal\n- Status: Active\n\n## C Line: Demonic Sect\n- Status: Active',
+        title: '副情节板',
+        content: '# 副情节板\n\n## A线: 主线故事\n- 状态: 活跃\n\n## B线: 张长老的背叛\n- 状态: 活跃\n\n## C线: 魔门\n- 状态: 活跃',
         updatedAt: '2026-03-20'
       },
       {
         id: '6',
         name: 'emotional_arcs.md',
-        title: 'Emotional Arcs',
-        content: '# Emotional Arcs\n\n## Protagonist\n- Chapter 30: Determination\n- Chapter 31: Anger at betrayal\n\n## Supporting Characters\n- Senior Sister Li: Worry\n- Master Chen: Pride',
+        title: '情感弧线',
+        content: '# 情感弧线\n\n## 主角\n- 第30章: 决心\n- 第31章: 对背叛的愤怒\n\n## 配角\n- 李师姐: 担忧\n- 陈师傅: 骄傲',
         updatedAt: '2026-03-20'
       },
       {
         id: '7',
         name: 'character_matrix.md',
-        title: 'Character Matrix',
-        content: '# Character Matrix\n\n## Protagonist & Elder Zhang\n- First meeting: Chapter 5\n- Current relationship: Hostile\n\n## Protagonist & Senior Sister Li\n- First meeting: Chapter 1\n- Current relationship: Friendly',
+        title: '角色矩阵',
+        content: '# 角色矩阵\n\n## 主角 & 张长老\n- 首次见面: 第5章\n- 当前关系: 敌对\n\n## 主角 & 李师姐\n- 首次见面: 第1章\n- 当前关系: 友好',
         updatedAt: '2026-03-20'
       }
     ];
@@ -114,12 +114,12 @@ const State: React.FC = () => {
       {/* Page Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">State Management</h1>
-          <p className="text-sm text-gray-500">Book: {bookTitle}</p>
+          <h1 className="text-2xl font-bold text-gray-900">状态管理</h1>
+          <p className="text-sm text-gray-500">书籍: {bookTitle}</p>
         </div>
         <Link to={`/books/${id}/chapters`} className="btn btn-secondary">
           <Book className="mr-2 h-4 w-4" />
-          View Chapters
+          查看章节
         </Link>
       </div>
 
@@ -165,7 +165,7 @@ const State: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Edit {selectedFile.title}</h2>
+              <h2 className="text-lg font-semibold text-gray-900">编辑 {selectedFile.title}</h2>
               <button
                 className="text-gray-400 hover:text-gray-500"
                 onClick={() => setIsEditModalOpen(false)}
@@ -177,7 +177,7 @@ const State: React.FC = () => {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">内容</label>
                 <textarea
                   className="input min-h-[400px] font-mono"
                   value={editContent}
@@ -189,13 +189,13 @@ const State: React.FC = () => {
                   className="btn btn-secondary"
                   onClick={() => setIsEditModalOpen(false)}
                 >
-                  Cancel
+                  取消
                 </button>
                 <button
                   className="btn btn-primary"
                   onClick={handleSaveEdit}
                 >
-                  Save
+                  保存
                 </button>
               </div>
             </div>
