@@ -11,8 +11,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
     "autoprefixer": "^10.4.16",
     "chart.js": "^4.4.8",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
     "hono": "^4.0.0",
     "lucide-react": "^0.344.0",
     "postcss": "^8.4.35",
