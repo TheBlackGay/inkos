@@ -19,6 +19,21 @@ interface Book extends BookConfig {
   wordCount: number;
 }
 
+export interface Chapter {
+  id: string;
+  number: number;
+  title: string;
+  status: string;
+  wordCount: number;
+  createdAt: string;
+  updatedAt: string;
+  auditIssues: string[];
+  content: string;
+  bookId: string;
+  parentChapterId?: string;
+  order: number;
+}
+
 interface ApiResponse<T> {
   success: boolean;
   data?: T;
@@ -119,6 +134,63 @@ export class ApiService {
   async deleteBook(id: string): Promise<ApiResponse<void>> {
     return this.request<void>(`/books/${id}`, {
       method: 'DELETE',
+    });
+  }
+
+  // 章节相关 API
+  async getChapters(bookId: string, params?: {
+    page?: number;
+    pageSize?: number;
+    search?: string;
+    status?: string;
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+  }): Promise<ApiResponse<PaginatedResponse<Chapter>>> {
+    const queryParams = new URLSearchParams();
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined) {
+          queryParams.append(key, String(value));
+        }
+      });
+    }
+    const queryString = queryParams.toString();
+    const url = `/books/${bookId}/chapters${queryString ? `?${queryString}` : ''}`;
+    return this.request<PaginatedResponse<Chapter>>(url);
+  }
+
+  async getChapter(bookId: string, chapterId: string): Promise<ApiResponse<Chapter>> {
+    return this.request<Chapter>(`/books/${bookId}/chapters/${chapterId}`);
+  }
+
+  async createChapter(bookId: string, chapter: {
+    title: string;
+    content?: string;
+    parentChapterId?: string;
+  }): Promise<ApiResponse<Chapter>> {
+    return this.request<Chapter>(`/books/${bookId}/chapters`, {
+      method: 'POST',
+      body: JSON.stringify(chapter),
+    });
+  }
+
+  async updateChapter(bookId: string, chapterId: string, chapter: Partial<Chapter>): Promise<ApiResponse<Chapter>> {
+    return this.request<Chapter>(`/books/${bookId}/chapters/${chapterId}`, {
+      method: 'PUT',
+      body: JSON.stringify(chapter),
+    });
+  }
+
+  async deleteChapter(bookId: string, chapterId: string): Promise<ApiResponse<void>> {
+    return this.request<void>(`/books/${bookId}/chapters/${chapterId}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async reorderChapters(bookId: string, order: { id: string; order: number }[]): Promise<ApiResponse<void>> {
+    return this.request<void>(`/books/${bookId}/chapters/reorder`, {
+      method: 'PUT',
+      body: JSON.stringify({ order }),
     });
   }
 }
