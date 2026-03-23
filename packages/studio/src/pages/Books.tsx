@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Book, Plus, Edit, Trash2, Search, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Button, Input, Select, Card } from '../components/ui';
 
 interface Book {
   id: string;
@@ -174,30 +175,29 @@ const Books: React.FC = () => {
       {/* Page Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">书籍管理</h1>
-        <button 
-          className="btn btn-primary" 
+        <Button 
+          variant="primary" 
           onClick={() => setIsCreateModalOpen(true)}
         >
           <Plus className="mr-2 h-4 w-4" />
           新建书籍
-        </button>
+        </Button>
       </div>
 
       {/* Search and Filter */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-          <input
+          <Input
             type="text"
             placeholder="搜索书籍..."
-            className="input pl-10"
+            className="pl-10"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         <div className="flex gap-4">
-          <select
-            className="select"
+          <Select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
           >
@@ -207,10 +207,9 @@ const Books: React.FC = () => {
             <option value="paused">暂停</option>
             <option value="completed">已完成</option>
             <option value="dropped">已放弃</option>
-          </select>
+          </Select>
           <div className="flex items-center space-x-2">
-            <select
-              className="select"
+            <Select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
@@ -218,20 +217,23 @@ const Books: React.FC = () => {
               <option value="title">标题</option>
               <option value="chapters">章节数</option>
               <option value="wordCount">字数</option>
-            </select>
-            <button
-              className="btn btn-secondary p-2"
+            </Select>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="p-2"
               onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
             >
               {sortOrder === 'asc' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
 
       {/* Books Table */}
-      <div className="card overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
+      <Card className="overflow-x-auto">
+        <div className="min-w-[640px]">
+          <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -310,7 +312,8 @@ const Books: React.FC = () => {
             <p className="text-gray-500">未找到书籍</p>
           </div>
         )}
-      </div>
+        </div>
+      </Card>
 
       {/* Create Book Modal */}
       {isCreateModalOpen && (
@@ -318,52 +321,43 @@ const Books: React.FC = () => {
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">新建书籍</h2>
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">标题</label>
-                <input
-                  type="text"
-                  className="input"
-                  value={newBook.title}
-                  onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">题材</label>
-                <input
-                  type="text"
-                  className="input"
-                  value={newBook.genre}
-                  onChange={(e) => setNewBook({ ...newBook, genre: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">状态</label>
-                <select
-                  className="select"
-                  value={newBook.status}
-                  onChange={(e) => setNewBook({ ...newBook, status: e.target.value })}
-                >
-                  <option value="incubating">孵化中</option>
-                  <option value="active">进行中</option>
-                  <option value="paused">暂停</option>
-                  <option value="completed">已完成</option>
-                  <option value="dropped">已放弃</option>
-                </select>
-              </div>
+              <Input
+                label="标题"
+                type="text"
+                value={newBook.title}
+                onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
+              />
+              <Input
+                label="题材"
+                type="text"
+                value={newBook.genre}
+                onChange={(e) => setNewBook({ ...newBook, genre: e.target.value })}
+              />
+              <Select
+                label="状态"
+                value={newBook.status}
+                onChange={(e) => setNewBook({ ...newBook, status: e.target.value })}
+              >
+                <option value="incubating">孵化中</option>
+                <option value="active">进行中</option>
+                <option value="paused">暂停</option>
+                <option value="completed">已完成</option>
+                <option value="dropped">已放弃</option>
+              </Select>
             </div>
             <div className="mt-6 flex justify-end space-x-2">
-              <button
-                className="btn btn-secondary"
+              <Button
+                variant="secondary"
                 onClick={() => setIsCreateModalOpen(false)}
               >
                 取消
-              </button>
-              <button
-                className="btn btn-primary"
+              </Button>
+              <Button
+                variant="primary"
                 onClick={handleCreateBook}
               >
                 创建
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -375,52 +369,43 @@ const Books: React.FC = () => {
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">编辑书籍</h2>
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">标题</label>
-                <input
-                  type="text"
-                  className="input"
-                  value={newBook.title}
-                  onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">题材</label>
-                <input
-                  type="text"
-                  className="input"
-                  value={newBook.genre}
-                  onChange={(e) => setNewBook({ ...newBook, genre: e.target.value })}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">状态</label>
-                <select
-                  className="select"
-                  value={newBook.status}
-                  onChange={(e) => setNewBook({ ...newBook, status: e.target.value })}
-                >
-                  <option value="incubating">孵化中</option>
-                  <option value="active">进行中</option>
-                  <option value="paused">暂停</option>
-                  <option value="completed">已完成</option>
-                  <option value="dropped">已放弃</option>
-                </select>
-              </div>
+              <Input
+                label="标题"
+                type="text"
+                value={newBook.title}
+                onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
+              />
+              <Input
+                label="题材"
+                type="text"
+                value={newBook.genre}
+                onChange={(e) => setNewBook({ ...newBook, genre: e.target.value })}
+              />
+              <Select
+                label="状态"
+                value={newBook.status}
+                onChange={(e) => setNewBook({ ...newBook, status: e.target.value })}
+              >
+                <option value="incubating">孵化中</option>
+                <option value="active">进行中</option>
+                <option value="paused">暂停</option>
+                <option value="completed">已完成</option>
+                <option value="dropped">已放弃</option>
+              </Select>
             </div>
             <div className="mt-6 flex justify-end space-x-2">
-              <button
-                className="btn btn-secondary"
+              <Button
+                variant="secondary"
                 onClick={() => setIsEditModalOpen(false)}
               >
                 取消
-              </button>
-              <button
-                className="btn btn-primary"
+              </Button>
+              <Button
+                variant="primary"
                 onClick={handleEditBook}
               >
                 保存
-              </button>
+              </Button>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Book, FileText, Edit, Trash2, Search, ChevronDown, ChevronUp, CheckCircle, AlertTriangle, Clock, Activity, RefreshCw } from 'lucide-react';
+import { Button, Input, Select, Textarea, Card } from '../components/ui';
 
 interface Chapter {
   id: string;
@@ -221,10 +222,12 @@ const Chapters: React.FC = () => {
             <Book className="mr-2 h-4 w-4" />
             查看状态
           </Link>
-          <button className="btn btn-primary">
+          <Button
+            variant="primary"
+          >
             <FileText className="mr-2 h-4 w-4" />
             写下一章
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -232,17 +235,16 @@ const Chapters: React.FC = () => {
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-          <input
+          <Input
             type="text"
             placeholder="搜索章节..."
-            className="input pl-10"
+            className="pl-10"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         <div className="flex gap-4">
-          <select
-            className="select"
+          <Select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
           >
@@ -256,10 +258,9 @@ const Chapters: React.FC = () => {
             <option value="approved">已批准</option>
             <option value="rejected">已拒绝</option>
             <option value="published">已发布</option>
-          </select>
+          </Select>
           <div className="flex items-center space-x-2">
-            <select
-              className="select"
+            <Select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
@@ -267,106 +268,110 @@ const Chapters: React.FC = () => {
               <option value="title">标题</option>
               <option value="wordCount">字数</option>
               <option value="updatedAt">更新时间</option>
-            </select>
-            <button
-              className="btn btn-secondary p-2"
+            </Select>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="p-2"
               onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
             >
               {sortOrder === 'asc' ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
 
       {/* Chapters Table */}
-      <div className="card overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                章节
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                标题
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                状态
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                字数
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                更新时间
-              </th>
-              <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                操作
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {filteredChapters.map((chapter) => (
-              <tr key={chapter.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="text-sm font-medium text-gray-900">{chapter.number}</span>
-                </td>
-                <td className="px-6 py-4">
-                  <span className="text-sm text-gray-900">{chapter.title}</span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={statusBadgeClass(chapter.status)}>
-                    {statusLabel(chapter.status)}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="text-sm text-gray-900">{chapter.wordCount.toLocaleString()}</span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="text-sm text-gray-900">{chapter.updatedAt}</span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div className="flex justify-end space-x-2">
-                    <button
-                      onClick={() => handleViewChapter(chapter)}
-                      className="text-primary hover:text-primary/80"
-                    >
-                      <FileText className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => handleEditChapter(chapter)}
-                      className="text-secondary hover:text-secondary/80"
-                    >
-                      <Edit className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => handleAuditChapter(chapter)}
-                      className="text-warning hover:text-warning/80"
-                    >
-                      <Activity className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => handleReviseChapter(chapter)}
-                      className="text-info hover:text-info/80"
-                    >
-                      <RefreshCw className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteChapter(chapter.id)}
-                      className="text-danger hover:text-danger/80"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                </td>
+      <Card className="overflow-x-auto">
+        <div className="min-w-[720px]">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  章节
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  标题
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  状态
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  字数
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  更新时间
+                </th>
+                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  操作
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        {filteredChapters.length === 0 && (
-          <div className="px-6 py-12 text-center">
-            <p className="text-gray-500">未找到章节</p>
-          </div>
-        )}
-      </div>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {filteredChapters.map((chapter) => (
+                <tr key={chapter.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="text-sm font-medium text-gray-900">{chapter.number}</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-sm text-gray-900">{chapter.title}</span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={statusBadgeClass(chapter.status)}>
+                      {statusLabel(chapter.status)}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="text-sm text-gray-900">{chapter.wordCount.toLocaleString()}</span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="text-sm text-gray-900">{chapter.updatedAt}</span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <div className="flex justify-end space-x-2">
+                      <button
+                        onClick={() => handleViewChapter(chapter)}
+                        className="text-primary hover:text-primary/80"
+                      >
+                        <FileText className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => handleEditChapter(chapter)}
+                        className="text-secondary hover:text-secondary/80"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => handleAuditChapter(chapter)}
+                        className="text-warning hover:text-warning/80"
+                      >
+                        <Activity className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => handleReviseChapter(chapter)}
+                        className="text-info hover:text-info/80"
+                      >
+                        <RefreshCw className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteChapter(chapter.id)}
+                        className="text-danger hover:text-danger/80"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {filteredChapters.length === 0 && (
+            <div className="px-6 py-12 text-center">
+              <p className="text-gray-500">未找到章节</p>
+            </div>
+          )}
+        </div>
+      </Card>
 
       {/* View Chapter Modal */}
       {isViewModalOpen && selectedChapter && (
@@ -431,27 +436,25 @@ const Chapters: React.FC = () => {
               </button>
             </div>
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">内容</label>
-                <textarea
-                  className="input min-h-[300px]"
-                  value={editContent}
-                  onChange={(e) => setEditContent(e.target.value)}
-                />
-              </div>
+              <Textarea
+                label="内容"
+                className="min-h-[300px]"
+                value={editContent}
+                onChange={(e) => setEditContent(e.target.value)}
+              />
               <div className="mt-6 flex justify-end space-x-2">
-                <button
-                  className="btn btn-secondary"
+                <Button
+                  variant="secondary"
                   onClick={() => setIsEditModalOpen(false)}
                 >
                   取消
-                </button>
-                <button
-                  className="btn btn-primary"
+                </Button>
+                <Button
+                  variant="primary"
                   onClick={handleSaveEdit}
                 >
                   保存
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -496,16 +499,18 @@ const Chapters: React.FC = () => {
                 </div>
               </div>
               <div className="mt-6 flex justify-end space-x-2">
-                <button
-                  className="btn btn-secondary"
+                <Button
+                  variant="secondary"
                   onClick={() => setIsAuditModalOpen(false)}
                 >
                   关闭
-                </button>
-                <button className="btn btn-primary">
+                </Button>
+                <Button
+                  variant="primary"
+                >
                   <RefreshCw className="mr-2 h-4 w-4" />
                   修订
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -528,32 +533,30 @@ const Chapters: React.FC = () => {
               </button>
             </div>
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">修订说明</label>
-                <textarea
-                  className="input min-h-[100px]"
-                  placeholder="输入修订说明..."
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">修订内容</label>
-                <textarea
-                  className="input min-h-[300px]"
-                  value={selectedChapter.content}
-                  onChange={(e) => setEditContent(e.target.value)}
-                />
-              </div>
+              <Textarea
+                label="修订说明"
+                className="min-h-[100px]"
+                placeholder="输入修订说明..."
+              />
+              <Textarea
+                label="修订内容"
+                className="min-h-[300px]"
+                value={selectedChapter.content}
+                onChange={(e) => setEditContent(e.target.value)}
+              />
               <div className="mt-6 flex justify-end space-x-2">
-                <button
-                  className="btn btn-secondary"
+                <Button
+                  variant="secondary"
                   onClick={() => setIsReviseModalOpen(false)}
                 >
                   取消
-                </button>
-                <button className="btn btn-primary">
+                </Button>
+                <Button
+                  variant="primary"
+                >
                   <CheckCircle className="mr-2 h-4 w-4" />
                   保存修订
-                </button>
+                </Button>
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Server, Play, RefreshCw, Activity, AlertTriangle, CheckCircle, X } from 'lucide-react';
+import { Button, Input, Card } from '../components/ui';
 
 interface DaemonStatus {
   isRunning: boolean;
@@ -81,39 +82,39 @@ const Daemon: React.FC = () => {
         <div className="flex space-x-2">
           {daemonStatus.isRunning ? (
             <>
-              <button 
-                className="btn btn-secondary" 
+              <Button 
+                variant="secondary" 
                 onClick={handleRestartDaemon}
                 disabled={isStopping}
               >
                 <RefreshCw className="mr-2 h-4 w-4" />
                 {isStopping ? '重启中...' : '重启'}
-              </button>
-              <button 
-                className="btn btn-danger" 
+              </Button>
+              <Button 
+                variant="danger" 
                 onClick={handleStopDaemon}
                 disabled={isStopping}
               >
                 <X className="mr-2 h-4 w-4" />
                 {isStopping ? '停止中...' : '停止'}
-              </button>
+              </Button>
             </>
           ) : (
-            <button 
-              className="btn btn-primary" 
+            <Button 
+              variant="primary" 
               onClick={handleStartDaemon}
               disabled={isStarting}
             >
               <Play className="mr-2 h-4 w-4" />
               {isStarting ? '启动中...' : '启动'}
-            </button>
+            </Button>
           )}
         </div>
       </div>
 
       {/* Daemon Status */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="card lg:col-span-1">
+        <Card className="lg:col-span-1">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900">状态</h2>
             <div className={`p-2 rounded-full ${daemonStatus.isRunning ? 'bg-success/10' : 'bg-danger/10'}`}>
@@ -148,9 +149,9 @@ const Daemon: React.FC = () => {
               <span className="text-sm font-medium text-gray-900">{daemonStatus.completedChapters}</span>
             </div>
           </div>
-        </div>
+        </Card>
 
-        <div className="card lg:col-span-2">
+        <Card className="lg:col-span-2">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">最近活动</h2>
           <div className="space-y-4">
             <div className="flex items-start">
@@ -198,11 +199,11 @@ const Daemon: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
 
       {/* Daemon Logs */}
-      <div className="card">
+      <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">守护进程日志</h2>
         <div className="bg-gray-50 p-4 rounded-md font-mono text-sm overflow-x-auto">
           <pre className="text-gray-800">
@@ -219,63 +220,60 @@ const Daemon: React.FC = () => {
 [2026-03-23 10:45:15] INFO: 下次运行计划于 2026-03-23 11:00:00`}
           </pre>
         </div>
-      </div>
+      </Card>
 
       {/* Daemon Configuration */}
-      <div className="card">
+      <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">配置</h2>
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">雷达 Cron</label>
-              <input
+              <Input
+                label="雷达 Cron"
                 type="text"
-                className="input"
                 defaultValue="0 */6 * * *"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">写作 Cron</label>
-              <input
+              <Input
+                label="写作 Cron"
                 type="text"
-                className="input"
                 defaultValue="*/15 * * * *"
               />
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">最大并发书籍</label>
-              <input
+              <Input
+                label="最大并发书籍"
                 type="number"
-                className="input"
                 defaultValue="3"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">每周期章节数</label>
-              <input
+              <Input
+                label="每周期章节数"
                 type="number"
-                className="input"
                 defaultValue="1"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">每日最大章节数</label>
-              <input
+              <Input
+                label="每日最大章节数"
                 type="number"
-                className="input"
                 defaultValue="50"
               />
             </div>
           </div>
           <div className="flex justify-end">
-            <button className="btn btn-primary">
+            <Button
+              variant="primary"
+            >
               保存配置
-            </button>
+            </Button>
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

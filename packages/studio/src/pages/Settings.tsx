@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Save, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Button, Input, Select, Card } from '../components/ui';
 
 interface LLMConfig {
   provider: string;
@@ -94,7 +95,7 @@ const Settings: React.FC = () => {
       </div>
 
       {/* LLM Configuration */}
-      <div className="card">
+      <Card>
         <div 
           className="flex justify-between items-center cursor-pointer"
           onClick={() => handleToggleSection('llm')}
@@ -108,83 +109,77 @@ const Settings: React.FC = () => {
           <div className="mt-4 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">提供商</label>
-                <select
-                  className="select"
+                <Select
+                  label="提供商"
                   value={llmConfig.provider}
                   onChange={(e) => setLlmConfig({ ...llmConfig, provider: e.target.value })}
                 >
                   <option value="openai">OpenAI</option>
                   <option value="anthropic">Anthropic</option>
                   <option value="custom">自定义</option>
-                </select>
+                </Select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">模型</label>
-                <input
+                <Input
+                  label="模型"
                   type="text"
-                  className="input"
                   value={llmConfig.model}
                   onChange={(e) => setLlmConfig({ ...llmConfig, model: e.target.value })}
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">基础 URL</label>
-              <input
+              <Input
+                label="基础 URL"
                 type="text"
-                className="input"
                 value={llmConfig.baseUrl}
                 onChange={(e) => setLlmConfig({ ...llmConfig, baseUrl: e.target.value })}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">API 密钥</label>
-              <input
+              <Input
+                label="API 密钥"
                 type="password"
-                className="input"
                 value={llmConfig.apiKey}
                 onChange={(e) => setLlmConfig({ ...llmConfig, apiKey: e.target.value })}
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">温度</label>
-                <input
+                <Input
+                  label="温度"
                   type="number"
                   step="0.1"
                   min="0"
                   max="2"
-                  className="input"
                   value={llmConfig.temperature}
                   onChange={(e) => setLlmConfig({ ...llmConfig, temperature: parseFloat(e.target.value) })}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">最大令牌数</label>
-                <input
+                <Input
+                  label="最大令牌数"
                   type="number"
-                  className="input"
                   value={llmConfig.maxTokens}
                   onChange={(e) => setLlmConfig({ ...llmConfig, maxTokens: parseInt(e.target.value) })}
                 />
               </div>
             </div>
             <div className="flex justify-end">
-              <button 
-                className="btn btn-primary"
+              <Button 
+                variant="primary"
                 onClick={handleSaveLLMConfig}
               >
                 <Save className="mr-2 h-4 w-4" />
                 保存配置
-              </button>
+              </Button>
             </div>
           </div>
         )}
-      </div>
+      </Card>
 
       {/* Notification Configuration */}
-      <div className="card">
+      <Card>
         <div 
           className="flex justify-between items-center cursor-pointer"
           onClick={() => handleToggleSection('notify')}
@@ -216,18 +211,16 @@ const Settings: React.FC = () => {
                       <>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Bot Token</label>
-                            <input
+                            <Input
+                              label="Bot Token"
                               type="text"
-                              className="input"
                               defaultValue={channel.config.botToken}
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Chat ID</label>
-                            <input
+                            <Input
+                              label="Chat ID"
                               type="text"
-                              className="input"
                               defaultValue={channel.config.chatId}
                             />
                           </div>
@@ -237,26 +230,23 @@ const Settings: React.FC = () => {
                     {channel.type === 'webhook' && (
                       <>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">URL</label>
-                          <input
+                          <Input
+                            label="URL"
                             type="text"
-                            className="input"
                             defaultValue={channel.config.url}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Secret</label>
-                          <input
+                          <Input
+                            label="Secret"
                             type="password"
-                            className="input"
                             defaultValue={channel.config.secret}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Events</label>
-                          <input
+                          <Input
+                            label="Events"
                             type="text"
-                            className="input"
                             defaultValue={channel.config.events.join(', ')}
                           />
                         </div>
@@ -272,9 +262,8 @@ const Settings: React.FC = () => {
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">类型</label>
-                      <select
-                        className="select"
+                      <Select
+                        label="类型"
                         value={newChannel.type}
                         onChange={(e) => setNewChannel({ ...newChannel, type: e.target.value })}
                       >
@@ -282,13 +271,12 @@ const Settings: React.FC = () => {
                         <option value="wechat-work">企业微信</option>
                         <option value="feishu">飞书</option>
                         <option value="webhook">Webhook</option>
-                      </select>
+                      </Select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">名称</label>
-                      <input
+                      <Input
+                        label="名称"
                         type="text"
-                        className="input"
                         value={newChannel.name}
                         onChange={(e) => setNewChannel({ ...newChannel, name: e.target.value })}
                       />
@@ -297,18 +285,16 @@ const Settings: React.FC = () => {
                   {newChannel.type === 'telegram' && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">机器人令牌</label>
-                        <input
+                        <Input
+                          label="机器人令牌"
                           type="text"
-                          className="input"
                           onChange={(e) => setNewChannel({ ...newChannel, config: { ...newChannel.config, botToken: e.target.value } })}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">聊天 ID</label>
-                        <input
+                        <Input
+                          label="聊天 ID"
                           type="text"
-                          className="input"
                           onChange={(e) => setNewChannel({ ...newChannel, config: { ...newChannel.config, chatId: e.target.value } })}
                         />
                       </div>
@@ -317,26 +303,23 @@ const Settings: React.FC = () => {
                   {newChannel.type === 'webhook' && (
                     <>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">URL</label>
-                        <input
+                        <Input
+                          label="URL"
                           type="text"
-                          className="input"
                           onChange={(e) => setNewChannel({ ...newChannel, config: { ...newChannel.config, url: e.target.value } })}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">密钥</label>
-                        <input
+                        <Input
+                          label="密钥"
                           type="password"
-                          className="input"
                           onChange={(e) => setNewChannel({ ...newChannel, config: { ...newChannel.config, secret: e.target.value } })}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">事件 (逗号分隔)</label>
-                        <input
+                        <Input
+                          label="事件 (逗号分隔)"
                           type="text"
-                          className="input"
                           placeholder="draft, audit, revise, approve"
                           onChange={(e) => setNewChannel({ ...newChannel, config: { ...newChannel.config, events: e.target.value.split(', ').map(e => e.trim()) } })}
                         />
@@ -344,45 +327,46 @@ const Settings: React.FC = () => {
                     </>
                   )}
                   <div className="flex justify-end space-x-2">
-                    <button
-                      className="btn btn-secondary"
+                    <Button
+                      variant="secondary"
                       onClick={() => setIsAddingChannel(false)}
                     >
                       取消
-                    </button>
-                    <button
-                      className="btn btn-primary"
+                    </Button>
+                    <Button
+                      variant="primary"
                       onClick={handleAddChannel}
                     >
                       添加渠道
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
             ) : (
-              <button
-                className="btn btn-secondary w-full flex items-center justify-center"
+              <Button
+                variant="secondary"
+                fullWidth
                 onClick={() => setIsAddingChannel(true)}
               >
                 <Plus className="mr-2 h-4 w-4" />
                 添加新渠道
-              </button>
+              </Button>
             )}
             <div className="flex justify-end">
-              <button 
-                className="btn btn-primary"
+              <Button 
+                variant="primary"
                 onClick={handleSaveNotifyConfig}
               >
                 <Save className="mr-2 h-4 w-4" />
                 保存配置
-              </button>
+              </Button>
             </div>
           </div>
         )}
-      </div>
+      </Card>
 
       {/* General Configuration */}
-      <div className="card">
+      <Card>
         <div 
           className="flex justify-between items-center cursor-pointer"
           onClick={() => handleToggleSection('general')}
@@ -395,31 +379,31 @@ const Settings: React.FC = () => {
         {expandedSection === 'general' && (
           <div className="mt-4 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">语言</label>
-              <select
-                className="select"
+              <Select
+                label="语言"
               >
                 <option value="zh">中文</option>
                 <option value="en">English</option>
-              </select>
+              </Select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">项目名称</label>
-              <input
+              <Input
+                label="项目名称"
                 type="text"
-                className="input"
                 defaultValue="InkOS Project"
               />
             </div>
             <div className="flex justify-end">
-              <button className="btn btn-primary">
+              <Button
+                variant="primary"
+              >
                 <Save className="mr-2 h-4 w-4" />
                 保存配置
-              </button>
+              </Button>
             </div>
           </div>
         )}
-      </div>
+      </Card>
     </div>
   );
 };

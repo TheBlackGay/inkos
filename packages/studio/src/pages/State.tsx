@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Book, FileText, Edit, ChevronDown, ChevronUp } from 'lucide-react';
+import { Button, Textarea, Card } from '../components/ui';
 
 interface StateFile {
   id: string;
@@ -126,7 +127,7 @@ const State: React.FC = () => {
       {/* State Files */}
       <div className="space-y-4">
         {stateFiles.map((file) => (
-          <div key={file.id} className="card">
+          <Card key={file.id}>
             <div 
               className="flex justify-between items-center cursor-pointer"
               onClick={() => handleToggleExpand(file.id)}
@@ -156,7 +157,7 @@ const State: React.FC = () => {
                 <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: formatMarkdown(file.content) }} />
               </div>
             )}
-          </div>
+          </Card>
         ))}
       </div>
 
@@ -176,27 +177,25 @@ const State: React.FC = () => {
               </button>
             </div>
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">内容</label>
-                <textarea
-                  className="input min-h-[400px] font-mono"
-                  value={editContent}
-                  onChange={(e) => setEditContent(e.target.value)}
-                />
-              </div>
+              <Textarea
+                label="内容"
+                className="min-h-[400px] font-mono"
+                value={editContent}
+                onChange={(e) => setEditContent(e.target.value)}
+              />
               <div className="mt-6 flex justify-end space-x-2">
-                <button
-                  className="btn btn-secondary"
+                <Button
+                  variant="secondary"
                   onClick={() => setIsEditModalOpen(false)}
                 >
                   取消
-                </button>
-                <button
-                  className="btn btn-primary"
+                </Button>
+                <Button
+                  variant="primary"
                   onClick={handleSaveEdit}
                 >
                   保存
-                </button>
+                </Button>
               </div>
             </div>
           </div>

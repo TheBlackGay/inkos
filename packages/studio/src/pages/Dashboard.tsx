@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+import { Card } from '../components/ui';
 
 // Register Chart.js components
 ChartJS.register(
@@ -86,7 +87,7 @@ const Dashboard: React.FC = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="card">
+        <Card>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-500">总书籍数</p>
@@ -103,9 +104,9 @@ const Dashboard: React.FC = () => {
             </span>
             <span className="text-sm text-gray-500 ml-2">较上月</span>
           </div>
-        </div>
+        </Card>
 
-        <div className="card">
+        <Card>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-500">总章节数</p>
@@ -122,9 +123,9 @@ const Dashboard: React.FC = () => {
             </span>
             <span className="text-sm text-gray-500 ml-2">较上月</span>
           </div>
-        </div>
+        </Card>
 
-        <div className="card">
+        <Card>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-500">总字数</p>
@@ -141,9 +142,9 @@ const Dashboard: React.FC = () => {
             </span>
             <span className="text-sm text-gray-500 ml-2">较上月</span>
           </div>
-        </div>
+        </Card>
 
-        <div className="card">
+        <Card>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-500">守护进程状态</p>
@@ -159,28 +160,28 @@ const Dashboard: React.FC = () => {
               运行时间: 2天14小时
             </span>
           </div>
-        </div>
+        </Card>
       </div>
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="card">
+        <Card>
           <h2 className="text-lg font-semibold text-gray-900 mb-4">字数趋势</h2>
           <div className="h-80">
             <Line data={wordCountData} options={chartOptions} />
           </div>
-        </div>
+        </Card>
 
-        <div className="card">
+        <Card>
           <h2 className="text-lg font-semibold text-gray-900 mb-4">章节状态</h2>
           <div className="h-80">
             <Bar data={chapterData} options={chartOptions} />
           </div>
-        </div>
+        </Card>
       </div>
 
       {/* 最近活动 */}
-      <div className="card">
+      <Card>
         <h2 className="text-lg font-semibold text-gray-900 mb-4">最近活动</h2>
         <div className="space-y-4">
           <div className="flex items-start">
@@ -228,7 +229,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

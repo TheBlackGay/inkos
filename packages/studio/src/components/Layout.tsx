@@ -62,7 +62,7 @@ const Layout: React.FC = () => {
       {/* Main Content */}
       <div className="flex flex-1">
         {/* Sidebar */}
-        <aside className={`${sidebarOpen ? 'block' : 'hidden'} md:block md:w-64 flex-shrink-0 bg-white border-r border-gray-200`}>
+        <aside className={`${sidebarOpen ? 'block' : 'hidden'} md:block md:w-64 lg:w-72 flex-shrink-0 bg-white border-r border-gray-200 transition-all duration-300`}>
           <div className="h-full flex flex-col">
             <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
               <nav className="flex-1 px-2 space-y-1">
