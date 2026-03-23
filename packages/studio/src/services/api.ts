@@ -68,7 +68,13 @@ export class ApiService {
       // 检查响应是否有内容
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('响应不是 JSON 格式');
+        // 如果不是JSON格式，尝试获取文本内容并返回错误
+        const text = await response.text();
+        console.error('非JSON响应:', text);
+        return { 
+          success: false, 
+          error: `响应不是 JSON 格式: ${text.substring(0, 100)}...` 
+        };
       }
 
       const data = await response.json();
@@ -79,6 +85,7 @@ export class ApiService {
 
       return { success: true, data };
     } catch (error) {
+      console.error('请求错误:', error);
       return { 
         success: false, 
         error: error instanceof Error ? error.message : '未知错误' 

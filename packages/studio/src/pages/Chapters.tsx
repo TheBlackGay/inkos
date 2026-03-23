@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Book, FileText, Edit, Trash2, Search, ChevronDown, ChevronUp, CheckCircle, AlertTriangle, Clock, Activity, RefreshCw, Plus, ArrowUp, ArrowDown, Pencil } from 'lucide-react';
+import { Book, FileText, Edit, Trash2, Search, ChevronDown, ChevronUp, ChevronRight, CheckCircle, AlertTriangle, Clock, Activity, RefreshCw, Plus, ArrowUp, ArrowDown, Pencil } from 'lucide-react';
 import { Button, Input, Select, Textarea, Card } from '../components/ui';
 import { apiService } from '../services/api';
 
@@ -14,6 +14,9 @@ interface Chapter {
   updatedAt: string;
   auditIssues: string[];
   content: string;
+  bookId: string;
+  parentChapterId?: string;
+  order: number;
 }
 
 const Chapters: React.FC = () => {

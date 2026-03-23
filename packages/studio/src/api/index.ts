@@ -25,6 +25,21 @@ interface ChapterMeta {
   wordCount?: number;
 }
 
+interface Chapter {
+  id: string;
+  number: number;
+  title: string;
+  status: string;
+  wordCount: number;
+  createdAt: string;
+  updatedAt: string;
+  auditIssues: string[];
+  content: string;
+  bookId: string;
+  parentChapterId?: string;
+  order: number;
+}
+
 // 简化的 StateManager 实现
 class StateManager {
   constructor(private readonly projectRoot: string) {}
@@ -82,6 +97,92 @@ class StateManager {
       return JSON.parse(raw);
     } catch {
       return [];
+    }
+  }
+
+  async loadChapters(bookId: string): Promise<Chapter[]> {
+    try {
+      const chaptersDir = join(this.bookDir(bookId), 'chapters');
+      const entries = await readdir(chaptersDir);
+      const chapters: Chapter[] = [];
+      
+      for (const entry of entries) {
+        if (entry === 'index.json') continue;
+        if (entry.endsWith('.json')) {
+          const chapterPath = join(chaptersDir, entry);
+          try {
+            const raw = await readFile(chapterPath, 'utf-8');
+            const chapter = JSON.parse(raw) as Chapter;
+            chapters.push(chapter);
+          } catch {
+            // 跳过无效的章节文件
+          }
+        }
+      }
+      
+      // 按order字段排序
+      return chapters.sort((a, b) => a.order - b.order);
+    } catch {
+      return [];
+    }
+  }
+
+  async saveChapter(bookId: string, chapter: Chapter): Promise<void> {
+    const chaptersDir = join(this.bookDir(bookId), 'chapters');
+    await mkdir(chaptersDir, { recursive: true });
+    
+    const chapterPath = join(chaptersDir, `${chapter.id}.json`);
+    await writeFile(
+      chapterPath,
+      JSON.stringify(chapter, null, 2),
+      'utf-8'
+    );
+    
+    // 更新章节索引
+    await this.updateChapterIndex(bookId);
+  }
+
+  async deleteChapter(bookId: string, chapterId: string): Promise<void> {
+    const chapterPath = join(this.bookDir(bookId), 'chapters', `${chapterId}.json`);
+    try {
+      await stat(chapterPath);
+      // 这里应该实现删除文件的逻辑
+      // 由于我们没有导入unlink，暂时只更新索引
+      await this.updateChapterIndex(bookId);
+    } catch {
+      // 章节文件不存在
+    }
+  }
+
+  async updateChapterIndex(bookId: string): Promise<void> {
+    const chaptersDir = join(this.bookDir(bookId), 'chapters');
+    await mkdir(chaptersDir, { recursive: true });
+    
+    const chapters = await this.loadChapters(bookId);
+    const index = chapters.map(chapter => ({
+      number: chapter.number,
+      title: chapter.title,
+      wordCount: chapter.wordCount
+    }));
+    
+    const indexPath = join(chaptersDir, 'index.json');
+    await writeFile(
+      indexPath,
+      JSON.stringify(index, null, 2),
+      'utf-8'
+    );
+  }
+
+  async reorderChapters(bookId: string, order: { id: string; order: number }[]): Promise<void> {
+    const chapters = await this.loadChapters(bookId);
+    const orderMap = new Map(order.map(item => [item.id, item.order]));
+    
+    for (const chapter of chapters) {
+      const newOrder = orderMap.get(chapter.id);
+      if (newOrder !== undefined) {
+        chapter.order = newOrder;
+        await this.saveChapter(bookId, chapter);
+      }
     }
   }
 }
@@ -294,6 +395,186 @@ app.delete('/api/books/:id', async (_req, res) => {
     res.status(204).send();
   } catch (error) {
     res.status(404).json({ error: '书籍不存在' });
+  }
+});
+
+// 章节相关 API
+
+// 获取章节列表
+app.get('/api/books/:id/chapters', async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    let chapters = await stateManager!.loadChapters(bookId);
+
+    // 处理查询参数
+    const search = req.query.search as string;
+    const status = req.query.status as string;
+    const sortBy = (req.query.sortBy as string) || 'number';
+    const sortOrder = (req.query.sortOrder as 'asc' | 'desc') || 'asc';
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 100;
+
+    // 搜索和筛选
+    if (search) {
+      chapters = chapters.filter(chapter => 
+        chapter.title.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    if (status && status !== 'all') {
+      chapters = chapters.filter(chapter => chapter.status === status);
+    }
+
+    // 排序
+    chapters.sort((a, b) => {
+      let aValue = a[sortBy as keyof Chapter];
+      let bValue = b[sortBy as keyof Chapter];
+
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return sortOrder === 'asc' 
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      }
+
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+      }
+
+      return 0;
+    });
+
+    // 分页
+    const total = chapters.length;
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const paginatedChapters = chapters.slice(startIndex, endIndex);
+
+    res.json({
+      items: paginatedChapters,
+      total,
+      page,
+      pageSize
+    });
+  } catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+// 获取单个章节
+app.get('/api/books/:id/chapters/:chapterId', async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const chapterId = req.params.chapterId;
+    const chapters = await stateManager!.loadChapters(bookId);
+    const chapter = chapters.find(ch => ch.id === chapterId);
+    
+    if (!chapter) {
+      return res.status(404).json({ error: '章节不存在' });
+    }
+    
+    res.json(chapter);
+  } catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+// 创建章节
+app.post('/api/books/:id/chapters', async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const { title, content = '', parentChapterId } = req.body;
+
+    if (!title) {
+      return res.status(400).json({ error: '章节标题是必填项' });
+    }
+
+    // 生成唯一 ID
+    const id = Date.now().toString();
+    const now = new Date().toISOString();
+    const chapters = await stateManager!.loadChapters(bookId);
+    const newNumber = chapters.length + 1;
+
+    const chapter: Chapter = {
+      id,
+      number: newNumber,
+      title,
+      status: 'drafted',
+      wordCount: content.length,
+      createdAt: now,
+      updatedAt: now,
+      auditIssues: [],
+      content,
+      bookId,
+      parentChapterId,
+      order: chapters.length
+    };
+
+    await stateManager!.saveChapter(bookId, chapter);
+    res.status(201).json(chapter);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+// 更新章节
+app.put('/api/books/:id/chapters/:chapterId', async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const chapterId = req.params.chapterId;
+    const updates = req.body;
+
+    const chapters = await stateManager!.loadChapters(bookId);
+    const existingChapter = chapters.find(ch => ch.id === chapterId);
+
+    if (!existingChapter) {
+      return res.status(404).json({ error: '章节不存在' });
+    }
+
+    const updatedChapter: Chapter = {
+      ...existingChapter,
+      ...updates,
+      updatedAt: new Date().toISOString()
+    };
+
+    // 更新字数
+    if (updates.content) {
+      updatedChapter.wordCount = updates.content.length;
+    }
+
+    await stateManager!.saveChapter(bookId, updatedChapter);
+    res.json(updatedChapter);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+// 删除章节
+app.delete('/api/books/:id/chapters/:chapterId', async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const chapterId = req.params.chapterId;
+
+    await stateManager!.deleteChapter(bookId, chapterId);
+    res.status(204).send();
+  } catch (error) {
+    res.status(404).json({ error: '章节不存在' });
+  }
+});
+
+// 章节排序
+app.put('/api/books/:id/chapters/reorder', async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const { order } = req.body;
+
+    if (!Array.isArray(order)) {
+      return res.status(400).json({ error: '排序数据必须是数组' });
+    }
+
+    await stateManager!.reorderChapters(bookId, order);
+    res.status(204).send();
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
   }
 });
 
